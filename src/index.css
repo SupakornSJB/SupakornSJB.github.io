@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Dark (default) theme */
+  --color-bg: #170b12;
+  --color-surface: #241220;
+  --color-surface-2: #2c1626;
+  --color-border: #47283a;
+  --color-border-hover: #603349;
+  --color-text: #f8edf3;
+  --color-text-muted: #d3a9bd;
+  --color-text-faint: #9a6f84;
+  --color-accent: #fa5aa8;
+  --color-accent-2: #ff8fce;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #fff8fa;
+  --color-surface: #ffffff;
+  --color-surface-2: #fdeef4;
+  --color-border: #f2c9db;
+  --color-border-hover: #e6a8c5;
+  --color-text: #2b1420;
+  --color-text-muted: #6b3d52;
+  --color-text-faint: #96697c;
+  --color-accent: #d6337e;
+  --color-accent-2: #c2255f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --ambient-grid-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  --ambient-bg-image:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 45%),
+    radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--color-accent-2) 15%, transparent), transparent 50%),
+    var(--ambient-grid-image);
+}
+
+:root[data-theme="light"] {
+  --ambient-grid-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  --ambient-bg-image:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 45%),
+    radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--color-accent-2) 8%, transparent), transparent 50%),
+    var(--ambient-grid-image);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--ambient-bg-image);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+}
+
+/* Used by the Projects sticky header: reuses the exact same pattern as
+   body::before, anchored to the viewport via background-attachment: fixed
+   so it lines up pixel-for-pixel instead of reading as a mismatched patch.
+   Fully opaque, so scrolled content is properly hidden rather than
+   overlapping into unreadable text — a card's own glow can still bleed
+   through at the seam in rare cases, an accepted tradeoff for this look. */
+.bg-ambient {
+  background-color: var(--color-bg);
+  background-image: var(--ambient-bg-image);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: var(--color-text);
+}
+
+/* Neon sign glow + flicker, used on the hero name.
+   will-change keeps this on its own composited layer at all times, so
+   scrolling it out of (and back into) a clipped overflow container doesn't
+   force a fresh repaint that can catch the animation mid-flicker. */
+.text-glow {
+  animation: neon-flicker 6s infinite;
+  will-change: text-shadow, opacity;
+}
+
+@keyframes neon-flicker {
+  0%,
+  100% {
+    text-shadow:
+      0 0 28px color-mix(in srgb, var(--color-accent) 65%, transparent),
+      0 0 55px color-mix(in srgb, var(--color-accent) 40%, transparent);
+    opacity: 1;
+  }
+  4% {
+    text-shadow: 0 0 10px color-mix(in srgb, var(--color-accent) 30%, transparent);
+    opacity: 0.9;
+  }
+  8% {
+    text-shadow:
+      0 0 28px color-mix(in srgb, var(--color-accent) 65%, transparent),
+      0 0 55px color-mix(in srgb, var(--color-accent) 40%, transparent);
+    opacity: 1;
+  }
+  10% {
+    text-shadow: 0 0 6px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    opacity: 0.85;
+  }
+  12%,
+  60% {
+    text-shadow:
+      0 0 28px color-mix(in srgb, var(--color-accent) 65%, transparent),
+      0 0 55px color-mix(in srgb, var(--color-accent) 40%, transparent);
+    opacity: 1;
+  }
+  62% {
+    text-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 24%, transparent);
+    opacity: 0.88;
+  }
+  64% {
+    text-shadow:
+      0 0 28px color-mix(in srgb, var(--color-accent) 65%, transparent),
+      0 0 55px color-mix(in srgb, var(--color-accent) 40%, transparent);
+    opacity: 1;
+  }
+}
+
+/* Smaller flicker for section headings ("Profile", "Projects", ...) */
+.section-glow {
+  animation: neon-flicker-sm 7s infinite;
+  will-change: text-shadow, opacity;
+}
+
+@keyframes neon-flicker-sm {
+  0%,
+  100% {
+    text-shadow:
+      0 0 12px color-mix(in srgb, var(--color-accent) 50%, transparent),
+      0 0 24px color-mix(in srgb, var(--color-accent) 25%, transparent);
+    opacity: 1;
+  }
+  5% {
+    text-shadow: 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    opacity: 0.8;
+  }
+  9%,
+  50% {
+    text-shadow:
+      0 0 12px color-mix(in srgb, var(--color-accent) 50%, transparent),
+      0 0 24px color-mix(in srgb, var(--color-accent) 25%, transparent);
+    opacity: 1;
+  }
+  53% {
+    text-shadow: 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    opacity: 0.8;
+  }
+  57% {
+    text-shadow:
+      0 0 12px color-mix(in srgb, var(--color-accent) 50%, transparent),
+      0 0 24px color-mix(in srgb, var(--color-accent) 25%, transparent);
+    opacity: 1;
+  }
+}
+
+/* Glow border + flicker used on featured project cards, timed slightly off
+   from the text flicker above so multiple "tubes" don't blink in lockstep.
+   No will-change here (unlike the text-glow layers above) — this box-shadow
+   can bleed a little past the card's own edges, and promoting it to its own
+   GPU layer let that bleed render on top of the sticky header instead of
+   being properly occluded by it. */
+.featured-glow {
+  animation: card-flicker 6.5s infinite;
+}
+
+@keyframes card-flicker {
+  0%,
+  100% {
+    box-shadow: 0 0 35px -10px color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+  4% {
+    box-shadow: 0 0 14px -10px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+  8%,
+  58% {
+    box-shadow: 0 0 35px -10px color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+  62% {
+    box-shadow: 0 0 16px -10px color-mix(in srgb, var(--color-accent) 26%, transparent);
+  }
+  66% {
+    box-shadow: 0 0 35px -10px color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+}
+
+/* Neon glow reads as light emitted from a dark surface — on the light theme
+   it would just look like a smudge behind readable text, so turn it off and
+   fall back to an ordinary soft drop shadow instead. */
+:root[data-theme="light"] .text-glow,
+:root[data-theme="light"] .section-glow {
+  animation: none;
+  text-shadow: none;
+}
+
+:root[data-theme="light"] .featured-glow {
+  animation: none;
+  box-shadow: 0 12px 30px -14px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+.section-fade {
+  animation: fade-up 0.6s ease-out both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blinking-cursor {
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.scroll-hint-bounce {
+  animation: bounce-y 1.6s ease-in-out infinite;
+}
+
+@keyframes bounce-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Chrome's "scroll anchoring" tries to preserve visual scroll position when
+   DOM content shifts (e.g. a filter shrinking the card list) by nudging a
+   scroll container to compensate. With slides nested inside this
+   snap-scrolling container, it can end up adjusting *this* element instead
+   of the inner slide that actually changed — landing it at an arbitrary,
+   unsnapped position. Opting this container out avoids that entirely. */
+.no-scroll-anchor {
+  overflow-anchor: none;
+}
+
+/* Theme-matched scrollbars instead of the jarring default OS ones */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-hover) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-hover);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent);
+}
+
+/* Used on the outer slide-snapping container: navigation there happens via
+   wheel/trackpad/nav-links, not by dragging its own scrollbar, and a
+   section long enough to scroll internally (Projects, Skills) already shows
+   its own scrollbar — without this, both render at once and look like a
+   confusing double scrollbar stacked at the same edge. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
