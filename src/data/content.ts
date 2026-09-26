@@ -84,6 +84,8 @@ export const TAGS = {
   framerMotion: "🎞️ Framer Motion",
   pwa: "📲 Workbox / PWA",
   scss: "🎨 SCSS",
+  googleMaps: "🗺️ Google Maps API",
+  claudeCode: "🤖 Claude Code",
 } as const;
 
 export type TagId = keyof typeof TAGS;
@@ -100,7 +102,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Frontend",
-    skills: ["react", "angular", "tailwind", "daisyui", "qwik"],
+    skills: ["react", "angular", "tailwind", "daisyui", "qwik", "googleMaps"],
   },
   {
     label: "Backend & Data",
@@ -113,6 +115,10 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Tools & Practices",
     skills: ["git", "aws", "agile", "blockchain"],
+  },
+  {
+    label: "AI",
+    skills: ["claudeCode"],
   },
 ];
 
@@ -187,37 +193,22 @@ export const projects: Project[] = [
     links: [{ label: "GitHub", url: "https://github.com/capdetat-ICE15capstone/roadmap-app-frontend" }],
   },
   {
-    title: "TeleQueue Counter",
-    period: "Full-stack project",
-    categories: ["web"],
+    title: "IQ180 (Online Multiplayer Math Puzzle)",
+    period: "Oct 2022 – Nov 2022",
+    categories: ["game"],
     description:
-      "A full-stack queue and counter management system with real-time updates pushed to every connected client over WebSocket.",
-    tech: ["typescript", "angular", "nestjs", "websocket", "tailwind", "daisyui"],
-    links: [
-      { label: "Frontend", url: "https://github.com/SupakornSJB/tele-queue-counter" },
-      { label: "Backend", url: "https://github.com/SupakornSJB/tele-queue-counter-backend" },
-    ],
+      "A two-player online math puzzle where players race a 60-second timer to build an equation that hits a target number, backed by a Python socket server hosting concurrent matches. Team project at Chulalongkorn University — I led the UI and graphics, from animated backgrounds to the in-game chat.",
+    tech: ["python", "pygame", "multiplayerNetworking"],
+    links: [{ label: "GitHub", url: "https://github.com/2190472-IQ190-2022/IQ180" }],
   },
   {
-    title: "N-Queens Visualizer",
-    period: "Algorithms",
-    categories: ["web"],
+    title: "IoT Smart Bin Dashboard",
+    period: "Sep 2023 – Dec 2023",
+    categories: ["web", "iot"],
     description:
-      "An interactive web UI built to explain and visualize algorithms for solving the classic N-Queens problem, step by step.",
-    tech: ["typescript", "react"],
-    links: [
-      { label: "Live demo", url: "https://supakornsjb.github.io/nqueen/" },
-      { label: "GitHub", url: "https://github.com/SupakornSJB/nqueen" },
-    ],
-  },
-  {
-    title: "Blockchain QR Stamper",
-    period: "AIT coursework",
-    categories: ["web"],
-    description:
-      "A small web application that stamps data onto the Ethereum blockchain and lets anyone verify it later by scanning a generated QR code.",
-    tech: ["typescript", "blockchain"],
-    links: [{ label: "GitHub", url: "https://github.com/SupakornSJB/atit-assignment-4" }],
+      "A React dashboard for sensor-equipped smart bins, with live fill, gas, and humidity readings, history charts, and a map of every bin. Team project at Chulalongkorn University — I was the main contributor, from the threshold-based alert logic to backend integration.",
+    tech: ["javascript", "react", "googleMaps"],
+    links: [{ label: "GitHub", url: "https://github.com/IOT-Smart-Bin/Frontend" }],
   },
   {
     title: "Space Tourism",
@@ -229,6 +220,39 @@ export const projects: Project[] = [
     links: [
       { label: "Live demo", url: "https://supakornsjb.github.io/frmt-space/" },
       { label: "GitHub", url: "https://github.com/SupakornSJB/frmt-space" },
+    ],
+  },
+  {
+    title: "N-Queens Visualizer",
+    period: "Algorithms",
+    categories: ["web"],
+    description:
+      "An interactive web UI built to explain and visualize algorithms for solving the classic N-Queens problem, step by step.",
+    tech: ["typescript", "react", "claudeCode"],
+    links: [
+      { label: "Live demo", url: "https://supakornsjb.github.io/nqueen/" },
+      { label: "GitHub", url: "https://github.com/SupakornSJB/nqueen" },
+    ],
+  },
+  {
+    title: "Blockchain QR Stamper",
+    period: "AIT coursework",
+    categories: ["web"],
+    description:
+      "A small web application that stamps data onto the Ethereum blockchain and lets anyone verify it later by scanning a generated QR code.",
+    tech: ["typescript", "blockchain", "claudeCode"],
+    links: [{ label: "GitHub", url: "https://github.com/SupakornSJB/atit-assignment-4" }],
+  },
+  {
+    title: "TeleQueue Counter",
+    period: "Full-stack project",
+    categories: ["web"],
+    description:
+      "A full-stack queue and counter management system with real-time updates pushed to every connected client over WebSocket.",
+    tech: ["typescript", "angular", "nestjs", "websocket", "tailwind", "daisyui"],
+    links: [
+      { label: "Frontend", url: "https://github.com/SupakornSJB/tele-queue-counter" },
+      { label: "Backend", url: "https://github.com/SupakornSJB/tele-queue-counter-backend" },
     ],
   },
 ];
